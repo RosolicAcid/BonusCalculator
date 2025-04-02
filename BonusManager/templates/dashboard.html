@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Employee List</h2>
+        <table>
+            <tr>
+                <th>Image</th>
+                <th>Employee Name</th>
+                <th>Employee ID</th>
+                <th>Joining Date</th>
+                <th>Designation</th>
+                <th>Department</th>
+                <th>Gross Salary</th>
+                <th>Address</th>
+            </tr>
+            {% for emp in employees %}
+            <tr>
+                <td><img src="{{ emp.image if emp.image else url_for('static', filename='default-profile.png') }}" alt="Profile Image"></td>
+                <td>{{ emp.name }}</td>
+                <td>{{ emp.user_id }}</td>
+                <td>{{ emp.joining_date }}</td>
+                <td>{{ emp.designation }}</td>
+                <td>{{ emp.department }}</td>
+                <td>${{ "{:,.2f}".format(emp.gross_salary) }}</td>
+                <td>{{ emp.address }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        {% if is_admin %}
+        <a href="/admin">Go to Admin Panel</a>
+        {% endif %}
+        <a href="/logout">Logout</a>
+    </div>
+</body>
+</html>
